@@ -95,8 +95,8 @@ const int lMotorPort = 0;					//左电机端口
 const int rMotorPort = 1;					//右电机端口
 const bool invertL = true;					//反转左电机
 const bool invertR = false;				//反转右电机
-float lcoe = 1.2;								//左电机速度系数 
-float rcoe = 1.2; 								//右电机速度系数 
+float lcoe = 1;								//左电机速度系数 
+float rcoe = 1; 								//右电机速度系数 
 const bool isMotoCL = false;				//速度闭环(???) 
 //舵机 
 const int servoPort = 9;					//舵机端口
@@ -105,10 +105,10 @@ const int servoID = 1;						//舵机ID
 const int battMin = 7800;					//电池电压最小值mV
 const int battMax = 8400;					//电池电压最大值mV
 //--------------Drive--------------//
-#define hspeed 55
-#define mspeed 45 
-#define lspeed -45
-#define tspeed 45
+#define hspeed 60
+#define mspeed 50 
+#define lspeed -
+#define tspeed 50
 //60 45 55 40
 //50 40 40 40 CL
 //Departure 2

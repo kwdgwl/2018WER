@@ -76,7 +76,6 @@ void ReadEE_Fast();
 void WriteEE();
 void main_match();
 void main_test();
-void rldServ();
 bool isMotorStop(); 
 //==============//
 
@@ -95,8 +94,8 @@ const int lMotorPort = 0;					//左电机端口
 const int rMotorPort = 1;					//右电机端口
 const bool invertL = true;					//反转左电机
 const bool invertR = false;				//反转右电机
-float lcoe = 1.2;								//左电机速度系数 
-float rcoe = 1.2; 								//右电机速度系数 
+float lcoe = 1;								//左电机速度系数 
+float rcoe = 1; 								//右电机速度系数 
 const bool isMotoCL = false;				//速度闭环(???) 
 //舵机 
 const int servoPort = 9;					//舵机端口
@@ -105,10 +104,10 @@ const int servoID = 1;						//舵机ID
 const int battMin = 7800;					//电池电压最小值mV
 const int battMax = 8400;					//电池电压最大值mV
 //--------------Drive--------------//
-#define hspeed 55
-#define mspeed 45 
-#define lspeed -45
-#define tspeed 45
+#define hspeed 60
+#define mspeed 50 
+#define lspeed -50 
+#define tspeed 50
 //60 45 55 40
 //50 40 40 40 CL
 //Departure 2
@@ -424,7 +423,7 @@ void main_test(){//调试用主程序
 					while(Get_BtnLeft()){
 						buf++;
 						wait(0.01);
-						if(buf>50){
+						if(buf>150){
 							BEEP(1000,0.15);
 							printf("        Debug\n\n  Return to SeqSel?");
 							wait(1);
@@ -458,7 +457,7 @@ void main_test(){//调试用主程序
 					while(Get_BtnRight()){
 						buf++;
 						wait(0.01);
-						if(buf>50){
+						if(buf>150){
 							bufFlag=false;
 							BEEP(1000,0.15);
 							printf("        Debug\n\n    Run dhUpdate?");
@@ -509,7 +508,6 @@ void main_test(){//调试用主程序
 				if(dbgLevel!=2){
 					printf("        Debug\n\n  Seq %2d Completed\n\n\n\n\n      Continue",curSeq);
 					drive(0,0);
-					rldServ();
 					BEEP(700,0.25);
 					while(!Get_Button()&&!AI(buttonPort)){;}
 					BEEP(1000,0.15);
@@ -915,14 +913,14 @@ void Mission_N14(){//114  下载 直回
 	for(;i<6;i++){
 		setServ(38,512);
 		drive(45,45);
-		wait(0.4);//0.4
+		wait(0.3);//0.4
 		drive(-45,-45);
 		wait(0.15);
 		drive(45,45);
 		wait(0.15);
 		drive(0,0);
 		setServ(65,512);
-		wait(0.25);//0.3
+		wait(0.15);//0.3
 		drive(40,40);
 		wait(0.25);
 		drive(0,0);
@@ -1366,9 +1364,6 @@ void initServ(){//舵机初始化
 		ServoPort_Init(servoPort);
 		isServInit = true;
 	}
-}
-void rldServ(){
-	setServ(0,0);
 }
 bool dhs(int port){//获取地灰状态 
 	if(useSafedh)

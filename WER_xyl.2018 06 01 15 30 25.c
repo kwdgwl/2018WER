@@ -76,7 +76,6 @@ void ReadEE_Fast();
 void WriteEE();
 void main_match();
 void main_test();
-void rldServ();
 bool isMotorStop(); 
 //==============//
 
@@ -95,9 +94,9 @@ const int lMotorPort = 0;					//左电机端口
 const int rMotorPort = 1;					//右电机端口
 const bool invertL = true;					//反转左电机
 const bool invertR = false;				//反转右电机
-float lcoe = 1.2;								//左电机速度系数 
-float rcoe = 1.2; 								//右电机速度系数 
-const bool isMotoCL = false;				//速度闭环(???) 
+float lcoe = 1;								//左电机速度系数 
+float rcoe = 1; 								//右电机速度系数 
+const bool isMotoCL = true;				//速度闭环(???) 
 //舵机 
 const int servoPort = 9;					//舵机端口
 const int servoID = 1;						//舵机ID 
@@ -105,10 +104,10 @@ const int servoID = 1;						//舵机ID
 const int battMin = 7800;					//电池电压最小值mV
 const int battMax = 8400;					//电池电压最大值mV
 //--------------Drive--------------//
-#define hspeed 55
-#define mspeed 45 
-#define lspeed -45
-#define tspeed 45
+#define hspeed 50 
+#define mspeed 40 
+#define lspeed 40 
+#define tspeed 40 
 //60 45 55 40
 //50 40 40 40 CL
 //Departure 2
@@ -142,20 +141,20 @@ const int mSpeed_7 = mspeed;
 const int lSpeed_7 = lspeed;
 const int tSpeed_7 = tspeed;
 const float btDelay_7 = 0.2;
-const float bttDelay_7 = 0.15;
+const float bttDelay_7 = 0.35;
 //Right 8
 const int hSpeed_8 = hspeed;
 const int mSpeed_8 = mspeed;
 const int lSpeed_8 = lspeed;
 const int tSpeed_8 = tspeed;
 const float btDelay_8 = 0.2;
-const float bttDelay_8 = 0.15;
+const float bttDelay_8 = 0.35;
 //TLeft 9
 const int tSpeed_9 = tspeed;
-const float bttDelay_9 = 0.15;
+const float bttDelay_9 = 0.35;
 //TRight 10
 const int tSpeed_10 = tspeed;
-const float bttDelay_10 = 0.15;
+const float bttDelay_10 = 0.35;
 //OnlyLeft 11
 const int lSpeed_11 = lspeed;
 const int mSpeed_11 = mspeed;
@@ -190,16 +189,16 @@ bool isMatch = false;
 //子程序序列(0-49) 
 int Sequence[50][100]= {{2,8,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},//单 航  
 								{2,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8},//单转换 
-								{201,2,8,7,202,6,6,114},   //单下载
+								{201,2,8,7,213,6,6,207},   //单下载
 								{218,8,7,8,101,10,7,8,7,6},  //bd
 								{2,210}, //交换
 								{201,1,2,6,202,9,3,0},  //上楼
-								{6,203,7,8,6,7,5,102,9,7,8,6},  //环
+								{6,218,7,8,6,7,5,214,9,7,8,6},  //环
 								{2,7,8,6,7,8,7,7,8,217,212,10,8,8,7,8,6,7,6,8,6}}; //瓶子 
 //子程序四行注释(0-49) 
 char *cmt[50][4] = {	{"sao wan yi","","",""},
 							{"sao wan yi","zhe shi sao wan yi"," sao de bu xin","666"},
-							{"","xia zai","",""},
+							{"","","",""},
 							{"","","",""},
 							{"","","",""},
 							{"","","",""},
@@ -424,7 +423,7 @@ void main_test(){//调试用主程序
 					while(Get_BtnLeft()){
 						buf++;
 						wait(0.01);
-						if(buf>50){
+						if(buf>150){
 							BEEP(1000,0.15);
 							printf("        Debug\n\n  Return to SeqSel?");
 							wait(1);
@@ -458,7 +457,7 @@ void main_test(){//调试用主程序
 					while(Get_BtnRight()){
 						buf++;
 						wait(0.01);
-						if(buf>50){
+						if(buf>150){
 							bufFlag=false;
 							BEEP(1000,0.15);
 							printf("        Debug\n\n    Run dhUpdate?");
@@ -509,7 +508,6 @@ void main_test(){//调试用主程序
 				if(dbgLevel!=2){
 					printf("        Debug\n\n  Seq %2d Completed\n\n\n\n\n      Continue",curSeq);
 					drive(0,0);
-					rldServ();
 					BEEP(700,0.25);
 					while(!Get_Button()&&!AI(buttonPort)){;}
 					BEEP(1000,0.15);
@@ -590,7 +588,7 @@ void Drive_Ontime(){//4
 void Drive_UtlStop(){//5
 	resettime();
 	while(true){
-		if(isMotorStop()&&seconds()>1.5){
+		if(isMotorStop()&&seconds()>0.5){
 			drive(0,0);
 			return;
 		}else if(dhs(1)){
@@ -915,14 +913,14 @@ void Mission_N14(){//114  下载 直回
 	for(;i<6;i++){
 		setServ(38,512);
 		drive(45,45);
-		wait(0.4);//0.4
+		wait(0.4);
 		drive(-45,-45);
 		wait(0.15);
 		drive(45,45);
 		wait(0.15);
 		drive(0,0);
 		setServ(65,512);
-		wait(0.25);//0.3
+		wait(0.3);
 		drive(40,40);
 		wait(0.25);
 		drive(0,0);
@@ -931,13 +929,9 @@ void Mission_N14(){//114  下载 直回
 		drive(-45,-45); 
 		wait(0.6);
 	}
-	setServ(38,512);
-	drive(45,45);
-	wait(0.4);
-	drive(-45,-55);
-	wait(0.5);
 	setServ(-90,512);
-	wait(2);
+	drive(-45,-55);
+	wait(3);
 }
 void Mission_N15(){//115  交换 带过线 
 	setServ(45,512);
@@ -1366,9 +1360,6 @@ void initServ(){//舵机初始化
 		ServoPort_Init(servoPort);
 		isServInit = true;
 	}
-}
-void rldServ(){
-	setServ(0,0);
 }
 bool dhs(int port){//获取地灰状态 
 	if(useSafedh)
