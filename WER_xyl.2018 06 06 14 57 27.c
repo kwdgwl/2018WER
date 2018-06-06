@@ -105,8 +105,8 @@ const int servoID = 1;						//舵机ID
 const int battMin = 7800;					//电池电压最小值mV
 const int battMax = 8400;					//电池电压最大值mV
 //--------------Drive--------------//
-#define hspeed 60
-#define mspeed 50
+#define hspeed 63
+#define mspeed 50 
 #define lspeed -50
 #define tspeed 50
 //60 45 55 40
@@ -142,20 +142,20 @@ const int mSpeed_7 = mspeed;
 const int lSpeed_7 = lspeed;
 const int tSpeed_7 = tspeed;
 const float btDelay_7 = 0.2;
-const float bttDelay_7 = 0.4;
+const float bttDelay_7 = 0.15;
 //Right 8
 const int hSpeed_8 = hspeed;
 const int mSpeed_8 = mspeed;
 const int lSpeed_8 = lspeed;
 const int tSpeed_8 = tspeed;
 const float btDelay_8 = 0.2;
-const float bttDelay_8 = 0.4;
+const float bttDelay_8 = 0.15;
 //TLeft 9
 const int tSpeed_9 = tspeed;
-const float bttDelay_9 = 0.4;
+const float bttDelay_9 = 0.15;
 //TRight 10
 const int tSpeed_10 = tspeed;
-const float bttDelay_10 = 0.4;
+const float bttDelay_10 = 0.15;
 //OnlyLeft 11
 const int lSpeed_11 = lspeed;
 const int mSpeed_11 = mspeed;
@@ -188,22 +188,22 @@ bool isMatch = false;
 
 //=================SEQUENCE=================//
 //子程序序列(0-49) 
-int Sequence[50][100]= {{2,8,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},//单 航  
-								{2,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8},//单转换 
+int Sequence[50][100]= {{2,8,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},//单 航  
+								{2,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8},//单转换 
 								{201,2,8,7,202,6,6,114},   //单下载
-								{201,2,8,8,5,101,9,7,7,6},  //
+								{218,8,7,8,101,10,7,8,7,6},  //bd
 								{2,210}, //交换
-								{201,1,2,6,101,9,3,0},  //上楼
+								{201,1,2,6,202,9,3,0},  //上楼
 								{6,203,7,8,6,7,5,102,9,7,8,6},  //环
 								{2,7,8,6,7,8,7,7,8,217,212,10,8,8,7,8,6,7,6,8,6}}; //瓶子 
-//子程序四行注释(0-49)
+//子程序四行注释(0-49) 
 char *cmt[50][4] = {	{"sao wan yi","","",""},
 							{"sao wan yi","zhe shi sao wan yi"," sao de bu xin","666"},
 							{"","xia zai","",""},
-							{"","ba kuang","",""},
 							{"","","",""},
 							{"","","",""},
-							{"","shang lou","",""},
+							{"","","",""},
+							{"","","",""},
 							{"","","",""},
 							{"","","",""}};
 //==========================================//
@@ -548,9 +548,9 @@ void Drive_UpStair(){//3
 			wait(upDelay_3);
 			drive(mSpeed_3,mSpeed_3);
 			break;
-		}else if(dhs(1)&&!dhs(0)){
+		}else if(dhs(1)){
 			drive(lSpeed_3,hSpeed_3);
-		}else if(dhs(5)&&!dhs(6)){
+		}else if(dhs(5)){
 			drive(hSpeed_3,lSpeed_3);
 		}else if(dhs(2)){
 			drive(mSpeed_3,hSpeed_3);
@@ -574,9 +574,9 @@ void Drive_Ontime(){//4
 		if(seconds()>time_4){
 			return;
 		}
-		if(dhs(1)&&!dhs(0)){
+		if(dhs(1)){
 			drive(lSpeed_4,hSpeed_4);
-		}else if(dhs(5)&&!dhs(6)){
+		}else if(dhs(5)){
 			drive(hSpeed_4,lSpeed_4);
 		}else if(dhs(2)){
 			drive(mSpeed_4,hSpeed_4);
@@ -593,9 +593,9 @@ void Drive_UtlStop(){//5
 		if(isMotorStop()&&seconds()>1.5){
 			drive(0,0);
 			return;
-		}else if(dhs(1)&&!dhs(0)){
+		}else if(dhs(1)){
 			drive(lSpeed_5,hSpeed_5);
-		}else if(dhs(5)&&!dhs(6)){
+		}else if(dhs(5)){
 			drive(hSpeed_5,lSpeed_5);
 		}else if(dhs(2)){
 			drive(mSpeed_5,hSpeed_5);
@@ -612,9 +612,9 @@ void Drive_CrossJunc(){//6
 			drive(hSpeed_6,hSpeed_6);
 			while((dhs(0)||dhs(6))){;}
 			return;
-		}else if(dhs(1)&&!dhs(0)){
+		}else if(dhs(1)){
 			drive(lSpeed_6,hSpeed_6);
-		}else if(dhs(5)&&!dhs(6)){
+		}else if(dhs(5)){
 			drive(hSpeed_6,lSpeed_6);
 		}else if(dhs(2)){
 			drive(mSpeed_6,hSpeed_6);
@@ -637,9 +637,9 @@ void Drive_UtlLeft(){//7
 				if(!dhs(0)&&!dhs(1)&&!dhs(5)&&!dhs(6)&&(dhs(2)||dhs(3)||dhs(4)))
 				return;
 			}
-		}else if(dhs(1)&&!dhs(0)){
+		}else if(dhs(1)){
 			drive(lSpeed_7,hSpeed_7);
-		}else if(dhs(5)&&!dhs(6)){
+		}else if(dhs(5)){
 			drive(hSpeed_7,lSpeed_7);
 		}else if(dhs(2)){
 			drive(mSpeed_7,hSpeed_7);
@@ -662,9 +662,9 @@ void Drive_UtlRight(){//8
 				if(!dhs(0)&&!dhs(1)&&!dhs(5)&&!dhs(6)&&(dhs(2)||dhs(3)||dhs(4)))
 				return;
 			}
-		}else if(dhs(1)&&!dhs(0)){
+		}else if(dhs(1)){
 			drive(lSpeed_8,hSpeed_8);
-		}else if(dhs(5)&&!dhs(6)){
+		}else if(dhs(5)){
 			drive(hSpeed_8,lSpeed_8);
 		}else if(dhs(2)){
 			drive(mSpeed_8,hSpeed_8);
@@ -697,7 +697,7 @@ void Drive_OnlyLeft(){//11
 		if(seconds()>time_11){
 			return;
 		}
-		if(dhs(1)&&!dhs(0)){
+		if(dhs(1)){
 			drive(lSpeed_7,hSpeed_7);
 		}else if(dhs(2)){
 			drive(mSpeed_7,hSpeed_7);
@@ -712,7 +712,7 @@ void Drive_OnlyRight(){//12
 		if(seconds()>time_12){
 			return;
 		}
-		if(dhs(5)&&!dhs(6)){
+		if(dhs(5)){
 			drive(hSpeed_7,lSpeed_7);
 		}else if(dhs(2)){
 			drive(mSpeed_7,hSpeed_7);
@@ -912,7 +912,6 @@ void Mission_N13(){//113  进制 带stop 带初始 带归位
 }
 void Mission_N14(){//114  下载 直回
 	int i=0;
-	Drive_SpeedUp();
 	for(;i<6;i++){
 		setServ(38,512);
 		drive(45,45);
@@ -935,7 +934,6 @@ void Mission_N14(){//114  下载 直回
 	setServ(38,512);
 	drive(45,45);
 	wait(0.4);
-	Drive_SpeedDown();
 	drive(-45,-55);
 	wait(0.5);
 	setServ(-90,512);

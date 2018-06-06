@@ -200,7 +200,7 @@ int Sequence[50][100]= {{2,8,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7
 char *cmt[50][4] = {	{"sao wan yi","","",""},
 							{"sao wan yi","zhe shi sao wan yi"," sao de bu xin","666"},
 							{"","xia zai","",""},
-							{"","ba kuang","",""},
+							{"","","",""},
 							{"","","",""},
 							{"","","",""},
 							{"","shang lou","",""},
@@ -912,7 +912,6 @@ void Mission_N13(){//113  进制 带stop 带初始 带归位
 }
 void Mission_N14(){//114  下载 直回
 	int i=0;
-	Drive_SpeedUp();
 	for(;i<6;i++){
 		setServ(38,512);
 		drive(45,45);
@@ -935,7 +934,6 @@ void Mission_N14(){//114  下载 直回
 	setServ(38,512);
 	drive(45,45);
 	wait(0.4);
-	Drive_SpeedDown();
 	drive(-45,-55);
 	wait(0.5);
 	setServ(-90,512);
