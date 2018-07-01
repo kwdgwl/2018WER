@@ -812,11 +812,11 @@ void Mission_N05(){//105  µçÄÔ
 	drive(30,30);
 	while(GetPrevSpeed(lMotorPort)||GetPrevSpeed(rMotorPort)){;}
 	setServ(85,1023);
-	drive(-45,-45);
+	drive(-30,-30);
 	wait(0.5); 
 	drive(0,0);
 	wait(0.15);
-	drive(45,45);
+	drive(30,30);
 	wait(0.3);
 	setServ(105,1023);
 	wait(0.05);
@@ -824,7 +824,7 @@ void Mission_N05(){//105  µçÄÔ
 	wait(0.1);
 	setServ(75,256);
 	wait(0.25);
-	drive(-45,-45);-
+	drive(-45,-45);
 	wait(0.5);
 	setServ(-90,512);
 }

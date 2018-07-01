@@ -191,11 +191,10 @@ bool isMatch = false;
 int Sequence[50][100]= {{2,8,7,7,8,7,7,8,9,7,8,8,7,8,6},//单 航  
 								{2,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8},//单转换 
 								{201,2,8,7,202,6,6,114},   //单下载
-								{201,2,8,8,5,111,9,7,7,6},  //
+								{201,2,8,8,5,101,9,7,7,6},  //
 								{2,115}, //交换
 								{201,1,2,6,101,9,3,0},  //上楼
-								{201,2,8,7,8,113,9,7,8,7,6},
-								{5,105},  //环
+								{6,203,7,8,6,7,5,102,9,7,8,6},  //环
 								{2,7,8,6,7,8,7,7,8,217,212,10,8,8,7,8,6,7,6,8,6}}; //瓶子 
 //子程序四行注释(0-49)
 char *cmt[50][4] = {	{"sao wan yi2hao","","",""},
@@ -204,7 +203,7 @@ char *cmt[50][4] = {	{"sao wan yi2hao","","",""},
 							{"","ba kuang","",""},
 							{"","jiaohuan","",""},
 							{"","shanglou","",""},
-							{"","jinzhi","",""},
+							{"","","",""},
 							{"","","",""},
 							{"","","",""}};
 //==========================================//
@@ -595,7 +594,7 @@ void Drive_Ontime(){//4
 void Drive_UtlStop(){//5
 	resettime();
 	while(true){
-		if(isMotorStop()&&seconds()>2.5){
+		if(isMotorStop()&&seconds()>1.5){
 			drive(0,0);
 			return;
 		}else if(dhs(1)&&!dhs(0)){
@@ -757,7 +756,7 @@ void Drive_Back(){//16
 //===============================================任务类函数===============================================// 
 void Mission_N01(){//101  开门上楼 crossjunc后 
 	drive(40,40);
-	wait(0.45);
+	wait(0.25);
 	drive(55,-15);
 	wait(0.55);
 	drive(-20,-20);
@@ -812,11 +811,11 @@ void Mission_N05(){//105  电脑
 	drive(30,30);
 	while(GetPrevSpeed(lMotorPort)||GetPrevSpeed(rMotorPort)){;}
 	setServ(85,1023);
-	drive(-45,-45);
+	drive(-30,-30);
 	wait(0.5); 
 	drive(0,0);
 	wait(0.15);
-	drive(45,45);
+	drive(30,30);
 	wait(0.3);
 	setServ(105,1023);
 	wait(0.05);
@@ -824,7 +823,7 @@ void Mission_N05(){//105  电脑
 	wait(0.1);
 	setServ(75,256);
 	wait(0.25);
-	drive(-45,-45);-
+	drive(-45,-45);
 	wait(0.5);
 	setServ(-90,512);
 }
@@ -874,7 +873,7 @@ void Mission_N11(){//111  拔框 无stop 带归位
 	drive(-45,-45);
 	wait(0.2);//0.2
 	drive(0,0);
-	setServ(90,512);
+	setServ(85,512);
 	wait(0.7);
 	drive(-45,70);
 	wait(0.5);
@@ -918,10 +917,10 @@ void Mission_N13(){//113  进制 带stop 带初始 带归位
 	wait(0.1);
 	drive(0,0);
 	setServ(65,512);
-	wait(0.4);
+	wait(1);
 	drive(-45,-45);
 	setServ(90,128);
-	wait(0.5);
+	wait(0.75);
 	drive(0,0);
 	setServ(-90,512);
 }
@@ -959,7 +958,7 @@ void Mission_N14(){//114  下载 直回
 void Mission_N15(){//115  交换 带过线 
 	setServ(45,512);
 	Drive_CrossJunc();
-	drive(30,3-0);
+	drive(30,30);
 	wait(0.3);
 	drive(0,0);
 	setServ(110,128);
@@ -1052,10 +1051,10 @@ void runsub(int sub,bool getName){//子函数调用函数
 				Drive_UpStair();
 				break;
 			case 4:
-				Drive_Ontime();
+				Drive_Back();
 				break;
 			case 5:
-				Drive_UtlStop();
+				Drive_Ontime();
 				break;
 			case 6:
 				Drive_CrossJunc();
@@ -1214,10 +1213,10 @@ void runsub(int sub,bool getName){//子函数调用函数
 					subName="D_UStair";
 					break;
 				case 4:
-					subName="D_Ontime";
+					subName="D_Back";
 					break;
 				case 5:
-					subName="D_UtStop";
+					subName="D_Ontime";
 					break;
 				case 6:
 					subName="D_CrJunc";

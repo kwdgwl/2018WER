@@ -195,7 +195,7 @@ int Sequence[50][100]= {{2,8,7,7,8,7,7,8,9,7,8,8,7,8,6},//单 航
 								{2,115}, //交换
 								{201,1,2,6,101,9,3,0},  //上楼
 								{201,2,8,7,8,113,9,7,8,7,6},
-								{5,105},  //环
+								{6,203,7,8,6,7,5,102,9,7,8,6},  //环
 								{2,7,8,6,7,8,7,7,8,217,212,10,8,8,7,8,6,7,6,8,6}}; //瓶子 
 //子程序四行注释(0-49)
 char *cmt[50][4] = {	{"sao wan yi2hao","","",""},
@@ -812,11 +812,11 @@ void Mission_N05(){//105  电脑
 	drive(30,30);
 	while(GetPrevSpeed(lMotorPort)||GetPrevSpeed(rMotorPort)){;}
 	setServ(85,1023);
-	drive(-45,-45);
+	drive(-30,-30);
 	wait(0.5); 
 	drive(0,0);
 	wait(0.15);
-	drive(45,45);
+	drive(30,30);
 	wait(0.3);
 	setServ(105,1023);
 	wait(0.05);
@@ -824,7 +824,7 @@ void Mission_N05(){//105  电脑
 	wait(0.1);
 	setServ(75,256);
 	wait(0.25);
-	drive(-45,-45);-
+	drive(-45,-45);
 	wait(0.5);
 	setServ(-90,512);
 }
@@ -918,10 +918,10 @@ void Mission_N13(){//113  进制 带stop 带初始 带归位
 	wait(0.1);
 	drive(0,0);
 	setServ(65,512);
-	wait(0.4);
+	wait(1);
 	drive(-45,-45);
 	setServ(90,128);
-	wait(0.5);
+	wait(0.2);
 	drive(0,0);
 	setServ(-90,512);
 }
