@@ -84,7 +84,6 @@ bool isMotorStop();
 //--------------Args--------------//
 //按钮 
 const int buttonPort = 11;//外接确认按钮端口 
-const int selEE = 7;
 //地灰 
 const bool useSafedh = true;				//使用"安全地灰" (避开地面绿色) 
 const int safedh = 100;						//地灰值增量 
@@ -190,25 +189,25 @@ bool isMatch = false;
 //=================SEQUENCE=================//
 //子程序序列(0-49) 
 int Sequence[50][100]= {{2,8,7,7,8,7,7,8,9,7,8,8,7,8,6},//单 航  
-						{2,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8},//单转换 
-						{201,2,8,7,202,6,6,114},   //单下载
-						{201,2,8,8,5,111,9,7,7,6},  //
-						{2,115}, //交换
-						{201,1,2,6,101,9,3,0},  //上楼
-						{201,2,8,7,8,113,9,7,8,7,6},
-						{5,105},  //环
-						{2,7,8,6,7,8,7,7,8,217,212,10,8,8,7,8,6,7,6,8,6}}; //瓶子 
+								{2,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8},//单转换 
+								{201,2,8,7,202,6,6,114},   //单下载
+								{201,2,8,8,5,111,9,7,7,6},  //
+								{2,115}, //交换
+								{201,1,2,6,101,9,3,0},  //上楼
+								{201,2,8,7,8,113,9,7,8,7,6},
+								{5,105},  //环
+								{2,7,8,6,7,8,7,7,8,217,212,10,8,8,7,8,6,7,6,8,6}}; //瓶子 
 //子程序四行注释(0-49)
-char *cmt[50][4] = {{"sao wan yi2hao","","",""},
-					{"sao wan yi","zhe shi sao wan yi"," sao de bu xin","666"},
-					{"","xia zai","",""},
-					{"","ba kuang","",""},
-					{"","jiaohuan","",""},
-					{"","shanglou","",""},
-					{"","jinzhi","",""},
-					{"","diannao","",""},
+char *cmt[50][4] = {	{"sao wan yi2hao","","",""},
+							{"sao wan yi","zhe shi sao wan yi"," sao de bu xin","666"},
+							{"","xia zai","",""},
+							{"","ba kuang","",""},
+							{"","jiaohuan","",""},
+							{"","shanglou","",""},
+							{"","jinzhi","",""},
+							{"","","",""},
 							{"","","",""}};
-//========================================//
+//==========================================//
 //=================================================主函数=================================================// 
 void main(){//主程序 
 	if(isMatch) main_match();
@@ -290,7 +289,6 @@ void main_test(){//调试用主程序
 	BEEP(700,0.25);
 	if(ReadEEOnStart)ReadEE_Fast();
 	curSeq = defSequence;
-	curSeq = ReadEEPROM(selEE);
 	int curStep = 0;
 	int i=0,Steps=0;
 	bool runFlag=false;
@@ -317,7 +315,6 @@ void main_test(){//调试用主程序
 				if(batt>battMin&&batt<battMax)
 				cnt=0;
 			}
-			WriteEEPROM(selEE,curSeq);
 			printf("        Debug\nChoose Sequence: %2d\n%s\n%s\n%s\n%s\nBatt:%d%s\nPrev     Sel     Next",curSeq,cmt[curSeq][0],cmt[curSeq][1],cmt[curSeq][2],cmt[curSeq][3],batt,cbatt?"<-ATTENTION":" ");
 				if(Get_Button()||AI(buttonPort))break;
 				if(cnt>29&&cbatt)BEEP(2000,0.25);
@@ -827,7 +824,7 @@ void Mission_N05(){//105  电脑
 	wait(0.1);
 	setServ(75,256);
 	wait(0.25);
-	drive(-45,-45);
+	drive(-45,-45);-
 	wait(0.5);
 	setServ(-90,512);
 }

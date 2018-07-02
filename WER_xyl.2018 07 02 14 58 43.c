@@ -827,7 +827,7 @@ void Mission_N05(){//105  µçÄÔ
 	wait(0.1);
 	setServ(75,256);
 	wait(0.25);
-	drive(-45,-45);
+	drive(-45,-45);-
 	wait(0.5);
 	setServ(-90,512);
 }

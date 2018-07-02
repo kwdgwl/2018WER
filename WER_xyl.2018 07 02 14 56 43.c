@@ -84,7 +84,7 @@ bool isMotorStop();
 //--------------Args--------------//
 //按钮 
 const int buttonPort = 11;//外接确认按钮端口 
-const int selEE = 7;
+const int selEE = 7
 //地灰 
 const bool useSafedh = true;				//使用"安全地灰" (避开地面绿色) 
 const int safedh = 100;						//地灰值增量 
@@ -290,7 +290,6 @@ void main_test(){//调试用主程序
 	BEEP(700,0.25);
 	if(ReadEEOnStart)ReadEE_Fast();
 	curSeq = defSequence;
-	curSeq = ReadEEPROM(selEE);
 	int curStep = 0;
 	int i=0,Steps=0;
 	bool runFlag=false;
@@ -317,7 +316,6 @@ void main_test(){//调试用主程序
 				if(batt>battMin&&batt<battMax)
 				cnt=0;
 			}
-			WriteEEPROM(selEE,curSeq);
 			printf("        Debug\nChoose Sequence: %2d\n%s\n%s\n%s\n%s\nBatt:%d%s\nPrev     Sel     Next",curSeq,cmt[curSeq][0],cmt[curSeq][1],cmt[curSeq][2],cmt[curSeq][3],batt,cbatt?"<-ATTENTION":" ");
 				if(Get_Button()||AI(buttonPort))break;
 				if(cnt>29&&cbatt)BEEP(2000,0.25);
@@ -827,7 +825,7 @@ void Mission_N05(){//105  电脑
 	wait(0.1);
 	setServ(75,256);
 	wait(0.25);
-	drive(-45,-45);
+	drive(-45,-45);-
 	wait(0.5);
 	setServ(-90,512);
 }
