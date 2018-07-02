@@ -196,9 +196,8 @@ int Sequence[50][100]= {{2,8,7,7,8,7,7,8,9,7,8,8,7,8,6},//单 航
 						{2,115}, //交换
 						{201,1,2,6,101,9,3,0},  //上楼
 						{201,2,8,7,8,113,9,7,8,7,6},
-						{201,5,105}, 
-						{201,5,104}, //瓶子
-						{112}}; 
+						{5,105},  //环
+						{2,7,8,6,7,8,7,7,8,217,212,10,8,8,7,8,6,7,6,8,6}}; //瓶子 
 //子程序四行注释(0-49)
 char *cmt[50][4] = {{"sao wan yi2hao","","",""},
 					{"sao wan yi","zhe shi sao wan yi"," sao de bu xin","666"},
@@ -208,7 +207,7 @@ char *cmt[50][4] = {{"sao wan yi2hao","","",""},
 					{"","shanglou","",""},
 					{"","jinzhi","",""},
 					{"","diannao","",""},
-							{"","dianhua","",""}};
+							{"","","",""}};
 //========================================//
 //=================================================主函数=================================================// 
 void main(){//主程序 
@@ -292,7 +291,7 @@ void main_test(){//调试用主程序
 	if(ReadEEOnStart)ReadEE_Fast();
 	curSeq = defSequence;
 	curSeq = ReadEEPROM(selEE);
-	if(curSeq>49||curSeq<0)curSeq=defSequence;
+	if(curSeq>) 
 	int curStep = 0;
 	int i=0,Steps=0;
 	bool runFlag=false;
@@ -528,7 +527,7 @@ void main_test(){//调试用主程序
 	}
 	goto B;
 }
-//===============================================寻线类函数===============================================//
+//===============================================寻线类函数===============================================// 
 void Drive_Init(){//1 
 	int i=0;
 	for(i=0;i<7;i++){
@@ -600,7 +599,7 @@ void Drive_Ontime(){//4
 void Drive_UtlStop(){//5
 	resettime();
 	while(true){
-		if(isMotorStop()&&seconds()>0.5){
+		if(isMotorStop()&&seconds()>2.5){
 			drive(0,0);
 			return;
 		}else if(dhs(1)&&!dhs(0)){
@@ -799,46 +798,38 @@ void Mission_N02(){//102  勾环
 void Mission_N03(){//103
 }
 void Mission_N04(){//104  电话 无stop 
-	setServ(6,512);
-	drive(-55,-55);
-	wait(0.35);
-	drive(55,55);
-	wait(0.4);
-	drive(0,0);
-	wait(0.1);
-	setServ(0,512);
-	wait(0.1);
-	drive(-55,-55);
-	wait(0.4);
+	setServ(5,512);
+	drive(-45,-45);
+	wait(0.5);
+	drive(45,45);
+	wait(0.6);
 	setServ(70,512);
-	drive(0,0);
-	wait(0.15);
-	drive(55,55);
-	wait(0.4);
-	drive(0,0);
-	wait(0.2);
-	drive(-55,-55);
-	wait(0.4);
+	drive(-45,-45);
+	wait(0.5);
+	drive(45,45);
+	wait(0.6);
+	drive(-45,-45);
+	wait(0.55);
 	setServ(-90,1023);
 }
 void Mission_N05(){//105  电脑 
 	drive(30,30);
 	while(GetPrevSpeed(lMotorPort)||GetPrevSpeed(rMotorPort)){;}
-	setServ(90,1023);
+	setServ(85,1023);
 	drive(-45,-45);
-	wait(0.35); 
+	wait(0.5); 
 	drive(0,0);
 	wait(0.15);
 	drive(45,45);
-	wait(0.35);
-	setServ(110,1023);//105
+	wait(0.3);
+	setServ(105,1023);
 	wait(0.05);
 	drive(0,0);
 	wait(0.1);
 	setServ(75,256);
 	wait(0.25);
-	drive(-65,-65);
-	wait(0.2);
+	drive(-45,-45);
+	wait(0.5);
 	setServ(-90,512);
 }
 void Mission_N06(){//106
@@ -896,18 +887,32 @@ void Mission_N11(){//111  拔框 无stop 带归位
 	wait(0.5);
 }
 void Mission_N12(){//112  瓶子  需改 
-	setServ(90,512);
+	setServ(0,512);
 	Drive_UtlStop();
+	drive(0,0);
+	wait(0.5); 
+	drive(-30,-30);
 	wait(1);
-	SetMoto(2,40);
+	drive(0,0);
+	setServ(125,512);
 	wait(0.5);
-	SetMoto(2,-40);
-	wait(1);
-	SetMoto(2,40);
+	Act_19();
+	drive(0,0);
 	wait(0.5);
-	SetMoto(2,0);
-	drive(-45,-45);
-	wait(1);
+	drive(-40,0);
+	wait(0.3);
+	drive(0,0);
+	wait(0.25);
+	drive(40,0);
+	wait(0.35);
+	drive(0,0);
+	wait(0.25);
+	drive(0,-50);
+	wait(0.3);
+	drive(0,0);
+	wait(0.25);
+	drive(0,40);
+	wait(0.35); 
 }
 void Mission_N13(){//113  进制 带stop 带初始 带归位 
 	setServ(0,512);
@@ -926,47 +931,32 @@ void Mission_N13(){//113  进制 带stop 带初始 带归位
 }
 void Mission_N14(){//114  下载 直回
 	int i=0;
-//	Drive_SpeedUp();
-//	for(;i<6;i++){
-//		setServ(38,512);
-//		drive(45,45);
-//		wait(0.5);//0.4
-//		drive(-45,-45);
-//		wait(0.15);
-//		drive(45,45);
-//		wait(0.15);
-//		drive(0,0);
-//		setServ(65,512);
-//		wait(0.45);//0.3
-//		drive(40,40);
-//		wait(0.25);
-//		drive(0,0);
-//		setServ(45,512);
-//		wait(0.35);
-//		drive(-45,-45); 
-//		wait(0.8);
-//	}
-//	setServ(38,512);
-//	drive(45,45);
-//	wait(0.6);
-//	Drive_SpeedDown();
-//	drive(-50,-55);
-//	wait(0.5);
-//	setServ(-90,512);
-//	wait(2);
-	drive(45,45);
-	wait(0.2);
-	setServ(55,1023);
-	wait(0.4);
-	for(;i<4;i++){
-		drive(-45,-45);
-		wait(0.5);
+	Drive_SpeedUp();
+	for(;i<6;i++){
+		setServ(38,512);
 		drive(45,45);
-		wait(0.55);
+		wait(0.6);//0.4
+		drive(-45,-45);
+		wait(0.15);
+		drive(45,45);
+		wait(0.15);
+		drive(0,0);
+		setServ(65,512);
+		wait(0.25);//0.3
+		drive(40,40);
+		wait(0.25);
+		drive(0,0);
+		setServ(45,512);
+		wait(0.2);
+		drive(-45,-45); 
+		wait(0.8);
 	}
-	setServ(90,512);
-	drive(-51,-59);
-	wait(1);
+	setServ(38,512);
+	drive(45,45);
+	wait(0.6);
+	Drive_SpeedDown();
+	drive(-45,-55);
+	wait(0.5);
 	setServ(-90,512);
 	wait(2);
 }
@@ -1005,7 +995,7 @@ void Act_01(){//201  通用舵机初始
 	setServ(-90,512); 
 }
 void Act_02(){//202  下载舵机初始 
-	setServ(65,512);
+	setServ(38,512);
 }
 void Act_03(){//203  钩子舵机初始 
 	setServ(0,512);

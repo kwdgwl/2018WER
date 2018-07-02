@@ -898,14 +898,12 @@ void Mission_N11(){//111  拔框 无stop 带归位
 void Mission_N12(){//112  瓶子  需改 
 	setServ(90,512);
 	Drive_UtlStop();
-	wait(1);
-	SetMoto(2,40);
+	SetMoto(2,20);
 	wait(0.5);
-	SetMoto(2,-40);
+	SetMoto(2,-20);
 	wait(1);
-	SetMoto(2,40);
+	SetMoto(2,20);
 	wait(0.5);
-	SetMoto(2,0);
 	drive(-45,-45);
 	wait(1);
 }

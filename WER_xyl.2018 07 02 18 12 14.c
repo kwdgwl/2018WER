@@ -197,8 +197,7 @@ int Sequence[50][100]= {{2,8,7,7,8,7,7,8,9,7,8,8,7,8,6},//单 航
 						{201,1,2,6,101,9,3,0},  //上楼
 						{201,2,8,7,8,113,9,7,8,7,6},
 						{201,5,105}, 
-						{201,5,104}, //瓶子
-						{112}}; 
+						{201,5,104}}; //瓶子 
 //子程序四行注释(0-49)
 char *cmt[50][4] = {{"sao wan yi2hao","","",""},
 					{"sao wan yi","zhe shi sao wan yi"," sao de bu xin","666"},
@@ -898,16 +897,8 @@ void Mission_N11(){//111  拔框 无stop 带归位
 void Mission_N12(){//112  瓶子  需改 
 	setServ(90,512);
 	Drive_UtlStop();
-	wait(1);
-	SetMoto(2,40);
-	wait(0.5);
-	SetMoto(2,-40);
-	wait(1);
-	SetMoto(2,40);
-	wait(0.5);
-	SetMoto(2,0);
-	drive(-45,-45);
-	wait(1);
+	SetMoto(lMotorPort,oalspd);
+	SetMoto(lMotorPort,oalspd);
 }
 void Mission_N13(){//113  进制 带stop 带初始 带归位 
 	setServ(0,512);

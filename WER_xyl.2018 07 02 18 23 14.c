@@ -899,11 +899,11 @@ void Mission_N12(){//112  Æ¿×Ó  Ðè¸Ä
 	setServ(90,512);
 	Drive_UtlStop();
 	wait(1);
-	SetMoto(2,40);
+	SetMoto(2,30);
 	wait(0.5);
 	SetMoto(2,-40);
 	wait(1);
-	SetMoto(2,40);
+	SetMoto(2,30);
 	wait(0.5);
 	SetMoto(2,0);
 	drive(-45,-45);
