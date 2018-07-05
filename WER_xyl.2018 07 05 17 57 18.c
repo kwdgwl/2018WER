@@ -142,14 +142,14 @@ const int hSpeed_7 = hspeed;
 const int mSpeed_7 = mspeed;
 const int lSpeed_7 = lspeed;
 const int tSpeed_7 = tspeed;
-const float btDelay_7 = 0.15;
+const float btDelay_7 = 0.25;
 const float bttDelay_7 = 0.3;
 //Right 8
 const int hSpeed_8 = hspeed;
 const int mSpeed_8 = mspeed;
 const int lSpeed_8 = lspeed;
 const int tSpeed_8 = tspeed;
-const float btDelay_8 = 0.15;
+const float btDelay_8 = 0.25;
 const float bttDelay_8 = 0.3;
 //TLeft 9
 const int tSpeed_9 = tspeed;
@@ -204,7 +204,7 @@ int Sequence[50][100]= {{2,8,7,7,8,7,7,8,9,7,8,8,7,8,6},//单 航
 						{107},
 						{201,8,7,103},
 						{102,10,7,103},
-						{207,106}
+						{7,206}
 						}; 
 //子程序四行注释(0-49)
 char *cmt[50][4] = {{"sao wan yi2hao","","",""},
@@ -656,7 +656,7 @@ void Drive_CrossJunc(){//6
 		}
 	}
 }
-void Drive_UtlLeft(){//7	*********************
+void Drive_UtlLeft(){//7
 	while(true){
 		if(dhs(0)&&dhs(1)&&dhs(2)){
 			drive(tSpeed_7,tSpeed_7);
@@ -684,7 +684,7 @@ void Drive_UtlLeft(){//7	*********************
 		}
 	}
 }
-void Drive_UtlRight(){//8	*********************
+void Drive_UtlRight(){//8
 	while(true){
 		if(dhs(6)&&dhs(5)&&dhs(4)){
 			drive(tSpeed_8,tSpeed_8);
@@ -875,13 +875,7 @@ void Mission_N05(){//105  电脑 					*hcp
 	wait(0.2);
 	setServ(-90,512);
 }
-void Mission_N06(){//106  打印
-	Act_06();
-	wait(3);
-	drive(15,15);
-	SetMoto(2,100);
-	wait(10);
-	SetMoto(2,0);
+void Mission_N06(){//106
 }
 void Mission_N07(){//107  病毒 带stop 需改		*hcp 
 	setServ(125,256);
@@ -1137,7 +1131,7 @@ void Act_05(){//205  抖右
 		wait(0.15);
 	} 
 } 
-void Act_06(){//206  慢速utlstop 
+void Act_06(){//206
 	resettime();
 	while(true){
 		if(isMotorStop()&&seconds()>0.5){
@@ -1159,32 +1153,6 @@ void Act_06(){//206  慢速utlstop
 	}
 }
 void Act_07(){//207
-	while(true){
-		if(dhs(0)&&dhs(1)&&dhs(2)){
-			drive(25,25);
-			wait(0.7);
-			drive(0,0);
-			drive(-25,25);
-			wait(0.2);
-			while(true){
-//				if(!dhs(0)&&!dhs(5)&&!dhs(6)&&(dhs(1)||dhs(2)||dhs(3)||dhs(4)))
-				if(!dhs(0)&&!dhs(4)&&!dhs(5)&&!dhs(6)&&dhs(3))
-				return;
-			}
-		}else if(dhs(1)&&!dhs(0)){
-			drive(-25,25);
-			while(!dhs(2)){;}
-		}else if(dhs(5)&&!dhs(6)){
-			drive(25,-25);
-			while(!dhs(4)){;}
-		}else if(dhs(2)){
-			drive(15,25);
-		}else if(dhs(4)){
-			drive(25,15);
-		}else{
-			drive(25,25);
-		}
-	}
 }
 void Act_08(){//208
 }

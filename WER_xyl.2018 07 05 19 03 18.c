@@ -656,7 +656,7 @@ void Drive_CrossJunc(){//6
 		}
 	}
 }
-void Drive_UtlLeft(){//7	*********************
+void Drive_UtlLeft(){//7
 	while(true){
 		if(dhs(0)&&dhs(1)&&dhs(2)){
 			drive(tSpeed_7,tSpeed_7);
@@ -684,7 +684,7 @@ void Drive_UtlLeft(){//7	*********************
 		}
 	}
 }
-void Drive_UtlRight(){//8	*********************
+void Drive_UtlRight(){//8
 	while(true){
 		if(dhs(6)&&dhs(5)&&dhs(4)){
 			drive(tSpeed_8,tSpeed_8);
@@ -1159,32 +1159,6 @@ void Act_06(){//206  ÂýËÙutlstop
 	}
 }
 void Act_07(){//207
-	while(true){
-		if(dhs(0)&&dhs(1)&&dhs(2)){
-			drive(25,25);
-			wait(0.7);
-			drive(0,0);
-			drive(-25,25);
-			wait(0.2);
-			while(true){
-//				if(!dhs(0)&&!dhs(5)&&!dhs(6)&&(dhs(1)||dhs(2)||dhs(3)||dhs(4)))
-				if(!dhs(0)&&!dhs(4)&&!dhs(5)&&!dhs(6)&&dhs(3))
-				return;
-			}
-		}else if(dhs(1)&&!dhs(0)){
-			drive(-25,25);
-			while(!dhs(2)){;}
-		}else if(dhs(5)&&!dhs(6)){
-			drive(25,-25);
-			while(!dhs(4)){;}
-		}else if(dhs(2)){
-			drive(15,25);
-		}else if(dhs(4)){
-			drive(25,15);
-		}else{
-			drive(25,25);
-		}
-	}
 }
 void Act_08(){//208
 }

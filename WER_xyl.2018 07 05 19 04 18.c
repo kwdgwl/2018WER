@@ -656,7 +656,7 @@ void Drive_CrossJunc(){//6
 		}
 	}
 }
-void Drive_UtlLeft(){//7	*********************
+void Drive_UtlLeft(){//7
 	while(true){
 		if(dhs(0)&&dhs(1)&&dhs(2)){
 			drive(tSpeed_7,tSpeed_7);
@@ -684,7 +684,7 @@ void Drive_UtlLeft(){//7	*********************
 		}
 	}
 }
-void Drive_UtlRight(){//8	*********************
+void Drive_UtlRight(){//8
 	while(true){
 		if(dhs(6)&&dhs(5)&&dhs(4)){
 			drive(tSpeed_8,tSpeed_8);
@@ -1162,27 +1162,27 @@ void Act_07(){//207
 	while(true){
 		if(dhs(0)&&dhs(1)&&dhs(2)){
 			drive(25,25);
-			wait(0.7);
+			wait(0.5);
 			drive(0,0);
-			drive(-25,25);
-			wait(0.2);
+			drive(-tSpeed_7,tSpeed_7);
+			wait(bttDelay_7);
 			while(true){
 //				if(!dhs(0)&&!dhs(5)&&!dhs(6)&&(dhs(1)||dhs(2)||dhs(3)||dhs(4)))
-				if(!dhs(0)&&!dhs(4)&&!dhs(5)&&!dhs(6)&&dhs(3))
+				if(!dhs(0)&&!dhs(3)&&!dhs(4)&&!dhs(5)&&!dhs(6)&&(dhs(1)||dhs(2)))
 				return;
 			}
 		}else if(dhs(1)&&!dhs(0)){
-			drive(-25,25);
+			drive(lSpeed_7,hSpeed_7);
 			while(!dhs(2)){;}
 		}else if(dhs(5)&&!dhs(6)){
-			drive(25,-25);
+			drive(hSpeed_7,lSpeed_7);
 			while(!dhs(4)){;}
 		}else if(dhs(2)){
-			drive(15,25);
+			drive(mSpeed_7,hSpeed_7);
 		}else if(dhs(4)){
-			drive(25,15);
+			drive(hSpeed_7,mSpeed_7);
 		}else{
-			drive(25,25);
+			drive(hSpeed_7,hSpeed_7);
 		}
 	}
 }

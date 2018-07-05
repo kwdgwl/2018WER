@@ -684,7 +684,7 @@ void Drive_UtlLeft(){//7	*********************
 		}
 	}
 }
-void Drive_UtlRight(){//8	*********************
+void Drive_UtlRight(){//8
 	while(true){
 		if(dhs(6)&&dhs(5)&&dhs(4)){
 			drive(tSpeed_8,tSpeed_8);
