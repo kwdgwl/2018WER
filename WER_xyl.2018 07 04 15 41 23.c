@@ -200,8 +200,7 @@ int Sequence[50][100]= {{2,8,7,7,8,7,7,8,9,7,8,8,7,8,6},//单 航
 						{201,5,104}, 
 						{112},
 						{6,110,10,6},
-						{6,116},
-						{2,8,7,8,107,14,9,7,8,7,6}
+						{6,116}
 						}; 
 //子程序四行注释(0-49)
 char *cmt[50][4] = {{"sao wan yi2hao","","",""},
@@ -215,8 +214,7 @@ char *cmt[50][4] = {{"sao wan yi2hao","","",""},
 					{"","dianhua","",""},
 					{"","caiping","",""},
 					{"","tuiche","",""},
-					{"","diufangkuai","",""},
-					{"","bd","",""}
+					{"","diufangkuai","",""}
 					};
 							 
 //========================================//
@@ -839,11 +837,11 @@ void Mission_N05(){//105  电脑 					*hcp
 	while(GetPrevSpeed(lMotorPort)||GetPrevSpeed(rMotorPort)){;}
 	setServ(90,1023);
 	drive(-45,-45);
-	wait(0.65); 
+	wait(0.35); 
 	drive(0,0);
 	wait(0.15);
 	drive(45,45);
-	wait(0.65);
+	wait(0.35);
 	setServ(110,1023);//105
 	wait(0.05);
 	drive(0,0);
@@ -856,23 +854,21 @@ void Mission_N05(){//105  电脑 					*hcp
 }
 void Mission_N06(){//106
 }
-void Mission_N07(){//107  病毒 带stop 需改
-	setServ(125,256);
-	Drive_UtlStop();
-	Act_05();
-	drive(20,20);
+void Mission_N07(){//107  病毒 带stop 需改 
+	setServ(60,512);
+	Act_19();
+	drive(0,0);
 	wait(1);
-	setServ(85,64);
-	wait(2);
-	setServ(-45,1023);
-	wait(3); 
-	drive(-20,-20);
-	wait(1);
-	
+	setServ(100,256);
+	drive(-30,-30);
+	wait(0.25);
+	drive(-45,-45);
+	wait(0.4);
+	drive(0,0);
 }
 void Mission_N08(){//108
 }
-void Mission_N09(){//109  导航 无stop 带归位 	*t *hcp
+void Mission_N09(){//109  导航 无stop 带归位 
 	drive(-30,-30);
 	wait(0.1);
 	setServ(45,1024); 
@@ -1046,37 +1042,33 @@ void Mission_N16(){//116  丢方块 需改			**args
 	if(!invert){
 		setServ(45,128);
 		Drive_CrossJunc();
-		drive(45,20);
-		wait(0.45);
-		drive(20,45);
-		wait(0.45);
+		drive(45,15);
+		wait(0.5);
+		drive(15,45);
+		wait(0.5);
 		drive(30,30);
 		while(!isMotorStop()){;}
-		wait(0.1);
 		drive(-40,-40);
 		wait(0.1);
 		drive(0,0);
 		setServ(110,256);
 		wait(1);
+		setServ(45,512);
 		drive(-40,-40);
 		wait(1);
-		setServ(45,512);
 	}else{
-		setServ(-15,128);
+		setServ(-10,128);
 		Drive_CrossJunc();
-		drive(45,20);
-		wait(0.35);
-		drive(20,45);
-		wait(0.35);
+		drive(45,15);
+		wait(0.5);
+		drive(15,45);
+		wait(0.5);
 		drive(30,30);
 		while(!isMotorStop()){;}
-		wait(0.1);
-		drive(-40,-40);
-		wait(0.1);
 		drive(0,0);
-		setServ(110,128);
+		setServ(110,256);
 		wait(2);
-		setServ(-15,512);
+		setServ(-10,512);
 		drive(-40,-40);
 		wait(1);
 	} 
@@ -1101,14 +1093,7 @@ void Act_04(){//204
 		drive((a-b)*0.05+spd,(b-a)*0.05+spd);
 	} 
 }
-void Act_05(){//205  抖一抖 
-	int i=3;
-	for(;i>0;i--){
-		drive(-20,20);
-		wait(0.15);
-		drive(20,-20);
-		wait(0.15);
-	} 
+void Act_05(){//205
 } 
 void Act_06(){//206
 }

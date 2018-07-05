@@ -201,7 +201,7 @@ int Sequence[50][100]= {{2,8,7,7,8,7,7,8,9,7,8,8,7,8,6},//单 航
 						{112},
 						{6,110,10,6},
 						{6,116},
-						{2,8,7,8,107,14,9,7,8,7,6}
+						{107}
 						}; 
 //子程序四行注释(0-49)
 char *cmt[50][4] = {{"sao wan yi2hao","","",""},
@@ -839,11 +839,11 @@ void Mission_N05(){//105  电脑 					*hcp
 	while(GetPrevSpeed(lMotorPort)||GetPrevSpeed(rMotorPort)){;}
 	setServ(90,1023);
 	drive(-45,-45);
-	wait(0.65); 
+	wait(0.35); 
 	drive(0,0);
 	wait(0.15);
 	drive(45,45);
-	wait(0.65);
+	wait(0.35);
 	setServ(110,1023);//105
 	wait(0.05);
 	drive(0,0);
@@ -859,13 +859,9 @@ void Mission_N06(){//106
 void Mission_N07(){//107  病毒 带stop 需改
 	setServ(125,256);
 	Drive_UtlStop();
-	Act_05();
-	drive(20,20);
+	drive(10,10);
 	wait(1);
-	setServ(85,64);
-	wait(2);
 	setServ(-45,1023);
-	wait(3); 
 	drive(-20,-20);
 	wait(1);
 	
@@ -1101,14 +1097,7 @@ void Act_04(){//204
 		drive((a-b)*0.05+spd,(b-a)*0.05+spd);
 	} 
 }
-void Act_05(){//205  抖一抖 
-	int i=3;
-	for(;i>0;i--){
-		drive(-20,20);
-		wait(0.15);
-		drive(20,-20);
-		wait(0.15);
-	} 
+void Act_05(){//205
 } 
 void Act_06(){//206
 }

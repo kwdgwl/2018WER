@@ -143,20 +143,20 @@ const int mSpeed_7 = mspeed;
 const int lSpeed_7 = lspeed;
 const int tSpeed_7 = tspeed;
 const float btDelay_7 = 0.15;
-const float bttDelay_7 = 0.3;
+const float bttDelay_7 = 0.4;
 //Right 8
 const int hSpeed_8 = hspeed;
 const int mSpeed_8 = mspeed;
 const int lSpeed_8 = lspeed;
 const int tSpeed_8 = tspeed;
 const float btDelay_8 = 0.15;
-const float bttDelay_8 = 0.3;
+const float bttDelay_8 = 0.4;
 //TLeft 9
 const int tSpeed_9 = tspeed;
-const float bttDelay_9 = 0.3;
+const float bttDelay_9 = 0.4;
 //TRight 10
 const int tSpeed_10 = tspeed;
-const float bttDelay_10 = 0.3;
+const float bttDelay_10 = 0.4;
 //OnlyLeft 11
 const int lSpeed_11 = lspeed;
 const int mSpeed_11 = mspeed;
@@ -199,9 +199,7 @@ int Sequence[50][100]= {{2,8,7,7,8,7,7,8,9,7,8,8,7,8,6},//单 航
 						{201,5,105}, 
 						{201,5,104}, 
 						{112},
-						{6,110,10,6},
-						{6,116},
-						{2,8,7,8,107,14,9,7,8,7,6}
+						{6,110}
 						}; 
 //子程序四行注释(0-49)
 char *cmt[50][4] = {{"sao wan yi2hao","","",""},
@@ -214,9 +212,7 @@ char *cmt[50][4] = {{"sao wan yi2hao","","",""},
 					{"","diannao","",""},
 					{"","dianhua","",""},
 					{"","caiping","",""},
-					{"","tuiche","",""},
-					{"","diufangkuai","",""},
-					{"","bd","",""}
+					{"","tuiche","",""}
 					};
 							 
 //========================================//
@@ -658,8 +654,7 @@ void Drive_UtlLeft(){//7
 			drive(-tSpeed_7,tSpeed_7);
 			wait(bttDelay_7);
 			while(true){
-//				if(!dhs(0)&&!dhs(5)&&!dhs(6)&&(dhs(1)||dhs(2)||dhs(3)||dhs(4)))
-				if(!dhs(0)&&!dhs(3)&&!dhs(4)&&!dhs(5)&&!dhs(6)&&(dhs(1)||dhs(2)))
+				if(!dhs(0)&&!dhs(5)&&!dhs(6)&&(dhs(1)||dhs(2)||dhs(3)||dhs(4)))
 				return;
 			}
 		}else if(dhs(1)&&!dhs(0)){
@@ -686,7 +681,7 @@ void Drive_UtlRight(){//8
 			drive(tSpeed_8,-tSpeed_8);
 			wait(bttDelay_8);
 			while(true){
-				if(!dhs(0)&&!dhs(1)&&!dhs(2)&&!dhs(3)&&!dhs(6)&&(dhs(4)||dhs(5)))
+				if(!dhs(0)&&!dhs(1)&&!dhs(6)&&(dhs(2)||dhs(3)||dhs(4)||dhs(5)))
 				return;
 			}
 		}else if(dhs(1)&&!dhs(0)){
@@ -709,8 +704,7 @@ void Drive_TurnLeft(){//9
 	wait(bttDelay_9);
 	while(true){
 //		if(!dhs(0)&&!dhs(1)&&!dhs(5)&&!dhs(6)&&(dhs(2)||dhs(3)||dhs(4)))
-//		if(!dhs(0)&&!dhs(5)&&!dhs(6)&&(dhs(1)||dhs(2)||dhs(3)||dhs(4)))
-		if(!dhs(0)&&!dhs(3)&&!dhs(4)&&!dhs(5)&&!dhs(6)&&(dhs(1)||dhs(2)))
+		if(!dhs(0)&&!dhs(5)&&!dhs(6)&&(dhs(1)||dhs(2)||dhs(3)||dhs(4)))
 		return;
 	}
 }
@@ -719,8 +713,7 @@ void Drive_TurnRight(){//10
 	wait(bttDelay_10);
 	while(true){
 //		if(!dhs(0)&&!dhs(1)&&!dhs(5)&&!dhs(6)&&(dhs(2)||dhs(3)||dhs(4)))
-//		if(!dhs(0)&&!dhs(1)&&!dhs(6)&&(dhs(2)||dhs(3)||dhs(4)||dhs(5)))
-		if(!dhs(0)&&!dhs(1)&&!dhs(2)&&!dhs(3)&&!dhs(6)&&(dhs(4)||dhs(5)))
+		if(!dhs(0)&&!dhs(1)&&!dhs(6)&&(dhs(2)||dhs(3)||dhs(4)||dhs(5)))
 		return;
 	}
 }
@@ -839,11 +832,11 @@ void Mission_N05(){//105  电脑 					*hcp
 	while(GetPrevSpeed(lMotorPort)||GetPrevSpeed(rMotorPort)){;}
 	setServ(90,1023);
 	drive(-45,-45);
-	wait(0.65); 
+	wait(0.35); 
 	drive(0,0);
 	wait(0.15);
 	drive(45,45);
-	wait(0.65);
+	wait(0.35);
 	setServ(110,1023);//105
 	wait(0.05);
 	drive(0,0);
@@ -856,91 +849,44 @@ void Mission_N05(){//105  电脑 					*hcp
 }
 void Mission_N06(){//106
 }
-void Mission_N07(){//107  病毒 带stop 需改
-	setServ(125,256);
-	Drive_UtlStop();
-	Act_05();
-	drive(20,20);
+void Mission_N07(){//107  病毒 带stop 需改 
+	setServ(60,512);
+	Act_19();
+	drive(0,0);
 	wait(1);
-	setServ(85,64);
-	wait(2);
-	setServ(-45,1023);
-	wait(3); 
-	drive(-20,-20);
-	wait(1);
-	
+	setServ(100,256);
+	drive(-30,-30);
+	wait(0.25);
+	drive(-45,-45);
+	wait(0.4);
+	drive(0,0);
 }
 void Mission_N08(){//108
 }
-void Mission_N09(){//109  导航 无stop 带归位 	*t *hcp
+void Mission_N09(){//109  导航 无stop 带归位 
 	drive(-30,-30);
 	wait(0.1);
 	setServ(45,1024); 
 	wait(0.65);
 	setServ(-90,1023);  
 }
-void Mission_N10(){//110  推车  				*hcp **args
-	int pt=1,dest=2300;//dt=r-l
-	bool invert=false;
-	if(!invert){
-		setServ(85,512);
-		drive(35,35);
-		wait(0.2);
-		drive(50,25);
-		wait(1.5);
-
-		resettime();
-		while(dest<AI(pt)||seconds()<0.5){
-			if(seconds()<0.5)
-			drive(45,40);
-			else
-			drive(35,30);
-			if(isMotorStop())break;
-		}
-		drive(0,0);
-		wait(0.5);
-		setServ(0,512); 
-		wait(0.25);
-		drive(-50,-50);
-		wait(1);
-		while(!dhs(0)&&!dhs(6)){;}
-		drive(35,35);
-		wait(0.25);
-	}else{
-		setServ(0,512);
-		drive(35,35);
-		wait(0.2);
-		drive(45,20	);
-		wait(1.5);
-		resettime();
-		while(dest<AI(pt)||seconds()<0.5){
-			if(seconds()<0.5)
-			drive(45,40);
-			else
-			drive(35,30);
-			if(isMotorStop())break;
-		}
-		drive(0,0);
-		wait(0.25);
-		setServ(85,512); 
-		wait(0.5);
-		while(!dhs(0)){
-			if(seconds()<0.5)
-			drive(-40,-45);
-			else
-			drive(-30,-40);
-		}
-		while(dhs(0)){;}
-		wait(0.2); 
-		drive(0,0);
-		wait(0.5);
-		setServ(0,512);
-		wait(0.25);
-		drive(-50,-50);
-		while(!dhs(0)&&!dhs(6)){;}
-		drive(35,35);
-		wait(0.25);
+void Mission_N10(){//110  推车  需改  
+	setServ(85,512);
+	drive(35,35);
+	wait(0.75);
+	drive(40,10);
+	wait(0.9);
+	drive(30,30);
+	wait(0.5);
+	int lpt=1,rpt=10,dt=0,ldest=700;//dt=r-l
+	while(ldest<AI(lpt)&&ldest+dt<AI(rpt)){
+		drive(25,35);
 	}
+	setServ(0,512); 
+	drive(0,0);
+	wait(0.25);
+	drive(-45,-45);
+	wait(1);
 }
 void Mission_N11(){//111  拔框 无stop 带归位 	*cp
 	drive(-45,-45);
@@ -954,7 +900,7 @@ void Mission_N11(){//111  拔框 无stop 带归位 	*cp
 	setServ(-90,512);
 	wait(0.5);
 }
-void Mission_N12(){//112  瓶子 					*hcp 
+void Mission_N12(){//112  瓶子  需改 
 	setServ(90,512);
 	Drive_UtlStop();
 	wait(1);
@@ -968,7 +914,7 @@ void Mission_N12(){//112  瓶子 					*hcp
 	drive(-45,-45);
 	wait(1);
 }
-void Mission_N13(){//113  进制 带stop 带初始	*h 
+void Mission_N13(){//113  进制 带stop 带初始 带归位 
 	setServ(0,512);
 	Drive_UtlStop();
 	drive(0,0);
@@ -983,7 +929,7 @@ void Mission_N13(){//113  进制 带stop 带初始	*h
 	drive(0,0);
 	setServ(-90,512);
 }
-void Mission_N14(){//114  下载 直回				*hcp
+void Mission_N14(){//114  下载 直回
 	int i=0;
 //	Drive_SpeedUp();
 //	for(;i<6;i++){
@@ -1032,7 +978,7 @@ void Mission_N14(){//114  下载 直回				*hcp
 void Mission_N15(){//115  交换 带过线 			*hcp
 	setServ(45,512);
 	Drive_CrossJunc();
-	drive(30,30);
+	drive(30,3-0);
 	wait(0.3);
 	drive(0,0);
 	setServ(110,128);
@@ -1041,46 +987,24 @@ void Mission_N15(){//115  交换 带过线 			*hcp
 	setServ(45,512);
 	wait(2);
 }
-void Mission_N16(){//116  丢方块 需改			**args
-	bool invert=true;
-	if(!invert){
-		setServ(45,128);
-		Drive_CrossJunc();
-		drive(45,20);
-		wait(0.45);
-		drive(20,45);
-		wait(0.45);
-		drive(30,30);
-		while(!isMotorStop()){;}
-		wait(0.1);
-		drive(-40,-40);
-		wait(0.1);
-		drive(0,0);
-		setServ(110,256);
-		wait(1);
-		drive(-40,-40);
-		wait(1);
-		setServ(45,512);
-	}else{
-		setServ(-15,128);
-		Drive_CrossJunc();
-		drive(45,20);
-		wait(0.35);
-		drive(20,45);
-		wait(0.35);
-		drive(30,30);
-		while(!isMotorStop()){;}
-		wait(0.1);
-		drive(-40,-40);
-		wait(0.1);
-		drive(0,0);
-		setServ(110,128);
-		wait(2);
-		setServ(-15,512);
-		drive(-40,-40);
-		wait(1);
-	} 
-} 
+void Mission_N16(){//116  丢方块 需改
+	setServ(45,512);
+	Drive_CrossJunc();
+	drive(45,15);
+	wait(0.5);
+	drive(15,45);
+	wait(0.5);
+	drive(30,30);
+	while(!isMotorStop()){;}
+	drive(-40,-40);
+	wait(0.1);
+	drive(0,0);
+	setServ(110,256);
+	wait(0.25);
+	drive(-40,-40);
+	wait(1);
+	setServ(45,512); 
+}
 //===============================================其他操作函数===============================================// 
 void Act_01(){//201  通用舵机初始
 	setServ(-90,512); 
@@ -1101,14 +1025,7 @@ void Act_04(){//204
 		drive((a-b)*0.05+spd,(b-a)*0.05+spd);
 	} 
 }
-void Act_05(){//205  抖一抖 
-	int i=3;
-	for(;i>0;i--){
-		drive(-20,20);
-		wait(0.15);
-		drive(20,-20);
-		wait(0.15);
-	} 
+void Act_05(){//205
 } 
 void Act_06(){//206
 }
