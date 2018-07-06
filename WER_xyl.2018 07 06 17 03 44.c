@@ -916,20 +916,21 @@ void Mission_N07(){//107  病毒 带stop 需改		*hcp
 	wait(3); 
 	drive(-20,-20);
 	wait(1);
+	
 }
 void Mission_N08(){//108  机器人
-	drive(-20,-20);
-	wait(0.25);
+
 	drive(20,-20);
-	wait(0.15);
+	wait(0.3);
+	drive(-20,-20);
+	wait(0.4);
 	drive(0,0);
-	wait(0.2);
 	int i=0;
 	for(;i<10;i++){
-		setServ(85,128);//128
-		wait(0.5);//0.5
-		setServ(50,128);
-		wait(0.5);
+		setServ(90,256);
+		wait(0.3);
+		setServ(45,256);
+		wait(0.3);
 	}
 }
 void Mission_N09(){//109  导航 无stop 带归位 	*t *hcp
@@ -1152,7 +1153,7 @@ void Act_03(){//203  钩子舵机初始
 	setServ(0,512);
 }
 void Act_04(){//204  jqr 
-	setServ(85,512);
+	setServ(90,512);
 }
 void Act_05(){//205  抖右
 	int i=3;

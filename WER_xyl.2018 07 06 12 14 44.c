@@ -205,9 +205,7 @@ int Sequence[50][100]= {{2,8,7,7,8,7,7,8,9,7,8,8,7,8,6},//单 航
 						{107},
 						{201,8,7,103},
 						{102,10,7,103},
-						{210,207,106},
-						{210,207,211},
-						{204,207,206,108}
+						{210,207,106}
 						}; 
 //子程序四行注释(0-49)
 char *cmt[50][4] = {{"sao wan yi2hao","","",""},
@@ -225,9 +223,7 @@ char *cmt[50][4] = {{"sao wan yi2hao","","",""},
 					{"","bd","",""},
 					{"","wx(up)","",""},
 					{"","gouhuan","",""},
-					{"","printer","",""}, 
-					{"","wxsession2","",""},
-					{"","jqrgc","",""}
+					{"","printer","",""}
 					};
 							 
 //========================================//
@@ -883,25 +879,30 @@ void Mission_N05(){//105  电脑 					*hcp
 }
 void Mission_N06(){//106  打印
 	Act_06();
-//	drive(15,25);
-//	wait(0.25);
-//	drive(25,15);
-//	wait(0.25);
-//	drive(15,25);
-//	wait(0.25);
-//	drive(25,15);
-//	wait(0.25);
+	drive(-15,-15);
+	wait(0.25);
 	//////
-	drive(-20,-20);
-	wait(0.15);
-	drive(25,35);
+	drive(-15,20);
+	wait(0.3);
+	drive(20,-15);
+	wait(0.3);
+	drive(-15,20);
+	wait(0.3);
+	drive(20,-15);
+	wait(0.3);
+	drive(-10,20);
+	wait(0.3);
+	drive(20,-10);
+	wait(0.3);
+	//////
+	drive(15,15);
 	wait(0.2);
-	int i=30;
-	for(;i<101;i+=2){
+	int i=20;
+	for(;i<101;i++){
 		SetMoto(2,i);
 		wait(0.05);
 	}
-	wait(7.5);
+	wait(10);
 	SetMoto(2,0);
 }
 void Mission_N07(){//107  病毒 带stop 需改		*hcp 
@@ -916,21 +917,10 @@ void Mission_N07(){//107  病毒 带stop 需改		*hcp
 	wait(3); 
 	drive(-20,-20);
 	wait(1);
+	
 }
-void Mission_N08(){//108  机器人
-	drive(-20,-20);
-	wait(0.25);
-	drive(20,-20);
-	wait(0.15);
-	drive(0,0);
-	wait(0.2);
-	int i=0;
-	for(;i<10;i++){
-		setServ(85,128);//128
-		wait(0.5);//0.5
-		setServ(50,128);
-		wait(0.5);
-	}
+void Mission_N08(){//108  卫星 
+	
 }
 void Mission_N09(){//109  导航 无stop 带归位 	*t *hcp
 	drive(-30,-30);
@@ -1151,8 +1141,7 @@ void Act_02(){//202  下载舵机初始
 void Act_03(){//203  钩子舵机初始 
 	setServ(0,512);
 }
-void Act_04(){//204  jqr 
-	setServ(85,512);
+void Act_04(){//204
 }
 void Act_05(){//205  抖右
 	int i=3;
@@ -1184,31 +1173,31 @@ void Act_06(){//206  慢速utlstop
 		}
 	}
 }
-void Act_07(){//207  l 
+void Act_07(){//207
 	while(true){
 		if(dhs(0)&&dhs(1)&&dhs(2)){
-			drive(35,35);
-			wait(0.475);
+			drive(25,25);
+			wait(0.7);
 			drive(0,0);
-			drive(-35,35);
-			wait(0.3);
+			drive(-25,25);
+			wait(0.2);
 			while(true){
 //				if(!dhs(0)&&!dhs(5)&&!dhs(6)&&(dhs(1)||dhs(2)||dhs(3)||dhs(4)))
-				if(!dhs(0)&&!dhs(5)&&!dhs(6)&&dhs(3))
+				if(!dhs(0)&&!dhs(4)&&!dhs(5)&&!dhs(6)&&dhs(3))
 				return;
 			}
 		}else if(dhs(1)&&!dhs(0)){
-			drive(-35,35);
+			drive(-25,25);
 			while(!dhs(2)){;}
 		}else if(dhs(5)&&!dhs(6)){
-			drive(35,-35);
+			drive(25,-25);
 			while(!dhs(4)){;}
 		}else if(dhs(2)){
-			drive(25,35);
+			drive(15,25);
 		}else if(dhs(4)){
-			drive(35,25);
+			drive(25,15);
 		}else{
-			drive(35,35);
+			drive(25,25);
 		}
 	}
 }
@@ -1224,40 +1213,10 @@ void Act_09(){//209
 		drive((a-b)*0.05+spd,(b-a)*0.05+spd);
 	} 
 }
-void Act_10(){//210  校准 
+void Act_10(){//210
 	Calibrate();
 }
-void Act_11(){//211  卫星  Ses2 
-	Act_06();
-	drive(-15,-15);
-	wait(0.1);
-	//////
-	drive(-15,20);
-	wait(0.4);
-	drive(20,-15);
-	wait(0.4);
-	drive(-15,20);
-	wait(0.4);
-	drive(20,-15);
-	wait(0.4);
-	drive(-15,25);
-	wait(0.3);
-	drive(25,-15);
-	wait(0.3);
-	drive(15,25);
-	wait(0.3);
-	drive(25,15);
-	SetMoto(2,25);
-	wait(0.3);
-	//////
-	drive(15,15);
-	SetMoto(2,60);
-	wait(0.25);
-	SetMoto(2,90);
-	wait(0.25);
-	SetMoto(2,0);
-	drive(-30,-30);
-	wait(0.5);
+void Act_11(){//211
 }
 void Act_12(){//212
 } 
@@ -1731,7 +1690,7 @@ bool isMotorStop(){//电机是否停转
 }
 void Calibrate(){
 	DI(0);
-	wait(0.2);
+	wait(0.1);
 	while(!DI(0)){
 		SetMoto(2,20);
         wait(0.05);

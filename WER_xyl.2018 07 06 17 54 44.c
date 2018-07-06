@@ -916,20 +916,23 @@ void Mission_N07(){//107  病毒 带stop 需改		*hcp
 	wait(3); 
 	drive(-20,-20);
 	wait(1);
+	
 }
 void Mission_N08(){//108  机器人
 	drive(-20,-20);
-	wait(0.25);
+	wait(0.1);
 	drive(20,-20);
-	wait(0.15);
+	wait(0.2);
 	drive(0,0);
 	wait(0.2);
 	int i=0;
 	for(;i<10;i++){
-		setServ(85,128);//128
-		wait(0.5);//0.5
-		setServ(50,128);
+		setServ(85,128);
 		wait(0.5);
+		setServ(55,128);
+		wait(0.3);
+		setServ(50,64);
+		wait(0.3);
 	}
 }
 void Mission_N09(){//109  导航 无stop 带归位 	*t *hcp

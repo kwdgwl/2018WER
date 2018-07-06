@@ -881,48 +881,7 @@ void Mission_N05(){//105  电脑 					*hcp
 	wait(0.2);
 	setServ(-90,512);
 }
-void Mission_N06(){//106  打印
-	Act_06();
-//	drive(15,25);
-//	wait(0.25);
-//	drive(25,15);
-//	wait(0.25);
-//	drive(15,25);
-//	wait(0.25);
-//	drive(25,15);
-//	wait(0.25);
-	//////
-	drive(-20,-20);
-	wait(0.15);
-	drive(25,35);
-	wait(0.2);
-	int i=30;
-	for(;i<101;i+=2){
-		SetMoto(2,i);
-		wait(0.05);
-	}
-	wait(7.5);
-	SetMoto(2,0);
-}
-void Mission_N07(){//107  病毒 带stop 需改		*hcp 
-	setServ(125,256);
-	Drive_UtlStop();
-	Act_05();
-	drive(20,20);
-	wait(1);
-	setServ(45,64);
-	wait(2);
-	setServ(-45,1023);
-	wait(3); 
-	drive(-20,-20);
-	wait(1);
-}
-void Mission_N08(){//108  机器人
-	drive(-20,-20);
-	wait(0.25);
-	drive(20,-20);
-	wait(0.15);
-	drive(0,0);
+void Mission_N06(){//106  打印2
 	wait(0.2);
 	int i=0;
 	for(;i<10;i++){

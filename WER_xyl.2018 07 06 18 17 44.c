@@ -916,6 +916,7 @@ void Mission_N07(){//107  病毒 带stop 需改		*hcp
 	wait(3); 
 	drive(-20,-20);
 	wait(1);
+	
 }
 void Mission_N08(){//108  机器人
 	drive(-20,-20);
