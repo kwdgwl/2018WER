@@ -1007,7 +1007,7 @@ void Mission_N10(){//110  推车  				*hcp **args
 		drive(50,25);
 		wait(1.5);
 		resettime();
-		while((dest-200)<AI(pt)||seconds()<0.5){
+		while((dest-300)<AI(pt)||seconds()<0.5){
 			if(seconds()<0.5)
 			drive(45,40);
 			else
@@ -1020,12 +1020,12 @@ void Mission_N10(){//110  推车  				*hcp **args
 		wait(0.5);
 		while(!dhs(0)){
 			if(seconds()<0.5)
-			drive(-40,-50);
+			drive(-40,-45);
 			else
 			drive(-30,-40);
 		}
 		while(dhs(0)){;}
-		wait(0.25);//0.2 
+		wait(0.2); 
 		drive(0,0);
 		wait(0.5);
 		setServ(0,512);
@@ -1416,13 +1416,7 @@ void Act_18(){//218  直寻线*****************************************************
 			wait(0.5);
 			break;
 		}
-		if(dhs(1)&&!dhs(0)&&seconds()<1){
-			drive(lSpeed_8,hSpeed_8);
-			while(!dhs(2)){;}
-		}else if(dhs(5)&&!dhs(6)&&seconds()<1){
-			drive(hSpeed_8,lSpeed_8);
-			while(!dhs(4)){;}
-		}else if(dhs(2)){
+		if(dhs(2)){
 			drive(mSpeed_8,hSpeed_8);
 		}else if(dhs(4)){
 			drive(hSpeed_8,mSpeed_8);

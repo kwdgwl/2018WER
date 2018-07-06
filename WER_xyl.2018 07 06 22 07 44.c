@@ -192,7 +192,7 @@ bool isMatch = false;
 //子程序序列(0-49) 
 int Sequence[50][100]= {{2,201,7,8,7,6,6,7,5,109,9,201,8,8,7,8,8,7,5,105,201,212,10,8,213,8,7,8,7,10,5,104,201,212,9,6,6,8,5,111,201,9,8,8,113,202,9,8,6,114},
 						{201,2,8,7,202,6,6,114}, 
-						{203,2,8,7,6,8,107,219/*10*/,8,7,6},
+						{2,8,7,6,8,107,10,8,7,6},
 						{},
 						{2,115}, //交换
 						{201,1,2,6,101,9,3},  //上楼
@@ -200,7 +200,7 @@ int Sequence[50][100]= {{2,201,7,8,7,6,6,7,5,109,9,201,8,8,7,8,8,7,5,105,201,212
 						{6,110,10,6}, 
 						{6,201,214,213,7,103,212,201,10,102,9,218}, 
 						{201,8,7,103},
-						{6,201,214,213,207,211,212,9,218},
+						{},
 						{},
 						{},
 						{},
@@ -219,7 +219,7 @@ char *cmt[50][4] = {{"yi lou","Servo: A","",""},
 					{"","diu fang kuai","",""},
 					{"","tui che","",""},
 					{"","wxup gouhuan","",""},
-					{"","wxperiod2","",""},
+					{"","","",""},
 					{"","","",""},
 					{"","","",""},
 					{"","bd","",""},
@@ -941,15 +941,11 @@ void Mission_N07(){//107  病毒 带stop 需改		*hcp
 	Drive_UtlStop();
 	Act_05();
 	drive(20,20);
-	wait(0.1);
-	drive(-15,-15);
-	setServ(45,64);
-	wait(0.2);
-	drive(15,15);
-	wait(0.75);
-	setServ(-45,1023);
-	drive(25,25);
 	wait(1);
+	setServ(45,64);
+	wait(2);
+	setServ(-45,1023);
+	wait(3); 
 	drive(-30,-30);
 	wait(0.5);
 }
@@ -1007,7 +1003,7 @@ void Mission_N10(){//110  推车  				*hcp **args
 		drive(50,25);
 		wait(1.5);
 		resettime();
-		while((dest-200)<AI(pt)||seconds()<0.5){
+		while(dest<AI(pt)-1500||seconds()<0.5){
 			if(seconds()<0.5)
 			drive(45,40);
 			else
@@ -1020,12 +1016,12 @@ void Mission_N10(){//110  推车  				*hcp **args
 		wait(0.5);
 		while(!dhs(0)){
 			if(seconds()<0.5)
-			drive(-40,-50);
+			drive(-40,-45);
 			else
 			drive(-30,-40);
 		}
 		while(dhs(0)){;}
-		wait(0.25);//0.2 
+		wait(0.2); 
 		drive(0,0);
 		wait(0.5);
 		setServ(0,512);
@@ -1184,8 +1180,8 @@ void Act_01(){//201  通用舵机初始
 void Act_02(){//202  下载舵机初始 
 	setServ(65,512);
 }
-void Act_03(){//203  bd钩子舵机初始 
-	setServ(125,256);
+void Act_03(){//203  钩子舵机初始 
+	setServ(0,512);
 }
 void Act_04(){//204  jqr 
 	setServ(85,512);
@@ -1317,6 +1313,8 @@ void Act_11(){//211  卫星  Ses2
 	SetMoto(2,90);
 	wait(0.25);
 	SetMoto(2,0);
+	drive(-30,-30);
+	wait(0.5);
 }
 void Act_12(){//212  退线 
 	drive(-45,-45);
@@ -1410,19 +1408,11 @@ void Act_17(){//217  无钝角右转 (七至八)
 	}
 }
 void Act_18(){//218  直寻线********************************************************
-	resettime();
 	while(1){
-		if(dhs(0)&&dhs(1)&&dhs(2)&&dhs(3)&&dhs(4)&&dhs(5)&&dhs(6)&&seconds()>1){
-			wait(0.5);
-			break;
-		}
-		if(dhs(1)&&!dhs(0)&&seconds()<1){
-			drive(lSpeed_8,hSpeed_8);
-			while(!dhs(2)){;}
-		}else if(dhs(5)&&!dhs(6)&&seconds()<1){
-			drive(hSpeed_8,lSpeed_8);
-			while(!dhs(4)){;}
-		}else if(dhs(2)){
+		if(dhs(0)&&dhs(1)&&dhs(2)&&dhs(3)&&dhs(4)&&dhs(5)&&dhs(6))
+		wait(0.5);
+		break;
+		if(dhs(2)){
 			drive(mSpeed_8,hSpeed_8);
 		}else if(dhs(4)){
 			drive(hSpeed_8,mSpeed_8);
@@ -1431,15 +1421,7 @@ void Act_18(){//218  直寻线*****************************************************
 		}
 	}
 }
-void Act_19(){//219  慢右转 
-	drive(25,-25);
-	wait(0.5);
-	while(true){
-//		if(!dhs(0)&&!dhs(1)&&!dhs(5)&&!dhs(6)&&(dhs(2)||dhs(3)||dhs(4)))
-//		if(!dhs(0)&&!dhs(1)&&!dhs(6)&&(dhs(2)||dhs(3)||dhs(4)||dhs(5)))
-		if(!dhs(0)&&!dhs(1)&&!dhs(2)&&!dhs(3)&&!dhs(6)&&(dhs(4)||dhs(5)))
-		return;
-	}
+void Act_19(){//219
 }
 void Act_20(){//220
 }

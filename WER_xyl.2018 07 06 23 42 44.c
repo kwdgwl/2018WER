@@ -1416,13 +1416,7 @@ void Act_18(){//218  Ö±Ñ°Ïß*****************************************************
 			wait(0.5);
 			break;
 		}
-		if(dhs(1)&&!dhs(0)&&seconds()<1){
-			drive(lSpeed_8,hSpeed_8);
-			while(!dhs(2)){;}
-		}else if(dhs(5)&&!dhs(6)&&seconds()<1){
-			drive(hSpeed_8,lSpeed_8);
-			while(!dhs(4)){;}
-		}else if(dhs(2)){
+		if(dhs(2)){
 			drive(mSpeed_8,hSpeed_8);
 		}else if(dhs(4)){
 			drive(hSpeed_8,mSpeed_8);
