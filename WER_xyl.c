@@ -185,22 +185,27 @@ float dbgSeqDelay = 1;
 int defSequence = 0;
 float dbgDelay = 0.0;
 //---------------------------------//
-bool isMatch = false;
+bool isMatch = true;
 //==========================================//
 
 //=================SEQUENCE=================//
 //子程序序列(0-49) 
-int Sequence[50][100]= {{2,201,7,8,7,6,6,7,5,109,9,201,8,8,7,8,8,7,5,105,201,212,10,8,213,8,7,8,7,10,5,104,201,212,9,6,6,8,5,111,201,9,8,8,113,202,9,8,6,114},
-						{201,2,8,7,202,6,6,114}, 
+int Sequence[50][100]= {{2,201,14,7,13,8,7,5,109,10,201,7,7,7,6,7,211,5,201,216,10,216,216,216,216,216},//2,201,14,7,13,8,7,5,109,10,9,201,,7,8,8,216,215,9,
+						{201,2,8,8,5,111,201,9,8,216,215,209,216,8,5,105,9,216,216,216,216,220,8,6,114},
+						//{2,201,7,8,7,5,109,9,201,217,5,104,9,6,6,8,5,111,201,9,8,8,5,105,9,8,6,114},
+						{201,2,8,7,202,6,6,114},
 						{203,2,8,7,6,8,107,219/*10*/,8,7,6},
-						{},
-						{2,115}, //交换
-						{201,1,2,6,101,9,3},  //上楼
+						{2,201,14,7,13,6,7,5,104,9,201,216,216,8,113,9,8,8,6},
+						{2,115},
+						{201,1,2,6,101,9,3},
 						{6,116},//丢方块 
-						{6,110,10,6}, 
-						{6,201,214,213,7,103,212,201,10,102,9,218}, 
-						{201,8,7,103},
-						{6,201,214,213,207,211,212,9,218},
+						{6,110,10,6},//推车 
+						{6,201,214,213,6,102,9,218},//勾环 
+						{},
+						{},
+						{},
+						{},
+						{},
 						{},
 						{},
 						{},
@@ -210,26 +215,45 @@ int Sequence[50][100]= {{2,201,7,8,7,6,6,7,5,109,9,201,8,8,7,8,8,7,5,105,201,212
 						{}
 						}; //二楼前左:214,213(6) 
 //子程序四行注释(0-49)
-char *cmt[50][4] = {{"yi lou","Servo: A","",""},
+char *cmt[50][4] = {{"daohang fujia","","",""},
+					{"yi lou","Servo: A","",""},
 					{"dan du xia zai","Servo: A",""},
 					{"bing du","Servo: C","",""},
-					{"ping zi","Servo: A","",""},
+					{"dianhua jinzhi","Servo: A","",""},
 					{"","jiao huan","",""}, 
 					{"","shang lou","",""},
 					{"","diu fang kuai","",""},
 					{"","tui che","",""},
-					{"","wxup gouhuan","",""},
-					{"","wxperiod2","",""},
-					{"","","",""},
-					{"","","",""},
-					{"","bd","",""},
-					{"","wx(up)","",""},
 					{"","gouhuan","",""},
-					{"","printer","",""}, 
-					{"","wxsession2","",""},
-					{"","jqrgc","",""}
+					{"","","",""},
+					{"","","",""},
+					{"","","",""},
+					{"","","",""},
+					{"","","",""},
+					{"","","",""},
+					{"","","",""}, 
+					{"","","",""},
+					{"","","",""}
 					};
 					
+					
+//					{2,201,7,8,7,5,109,9,201,9,217,5,104,9,6,6,8,5,111,201,9,8,8,5,105,9,8,6,114},
+//						{201,2,8,7,202,6,6,114}, 
+//						{203,2,8,7,6,8,107,219/*10*/,8,7,6},
+//						{},
+//						{2,115}, //交换
+//						{201,1,2,6,101,9,3},  //上楼
+//						{6,116},//丢方块 
+//						{6,110,10,6}, 
+//						{6,201,214,213,7,103,212,201,10,102,9,218}, 
+//						{201,8,7,103},
+//						{6,201,214,213,207,211,212,9,218},
+//						{220},
+						
+						
+						
+						
+						
 //						{2,8,7,7,8,7,7,8,9,7,8,8,7,8,6},//单 航  
 //						{2,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8},//单转换 
 //						{201,2,8,7,202,6,6,114},   //单下载
@@ -281,6 +305,8 @@ void main_match(){//比赛用主程序
 	Drive_Init();
 	if(ReadEEOnStart)ReadEE_Fast();
 	curSeq = defSequence;
+	curSeq = ReadEEPROM(selEE);
+	if(curSeq>49||curSeq<0)curSeq=defSequence;
 	int curStep = 0;
 	int i=0,Steps=0;
 	bool runFlag=false;
@@ -296,6 +322,7 @@ void main_match(){//比赛用主程序
 			bool cbatt=false;
 			int batt;
 			batt = Get_Battery(); 
+			WriteEEPROM(selEE,curSeq);
 			if(batt<battMin||batt>battMax)cbatt=true;
 				printf("        MATCH\nChoose Sequence: %2d\n%s\n%s\n%s\n%s\nBatt:%d%s\nPrev     Sel     Next",curSeq,cmt[curSeq][0],cmt[curSeq][1],cmt[curSeq][2],cmt[curSeq][3],batt,cbatt?" ATTENTION":"");
 				if(Get_Button()||AI(buttonPort))break;
@@ -824,9 +851,9 @@ void Drive_Back(){//16
 //===============================================任务类函数===============================================// 
 void Mission_N01(){//101  开门上楼 crossjunc后	*cp
 	drive(40,40);
-	wait(0.45);
+	wait(0.5);
 	drive(55,-15);
-	wait(0.55);
+	wait(0.6);
 	drive(-20,-20);
 	setServ(110,1023); 
 	wait(0.3);
@@ -893,13 +920,14 @@ void Mission_N04(){//104  电话 无stop 			*hcp
 	wait(0.4);
 	drive(0,0);
 	wait(0.2);
+	setServ(90,512);
 }
 void Mission_N05(){//105  电脑 					*hcp
 	drive(30,30);
 	while(GetPrevSpeed(lMotorPort)||GetPrevSpeed(rMotorPort)){;}
 	setServ(90,1023);
 	drive(-45,-45);
-	wait(0.65); 
+	wait(0.4); 
 	drive(0,0);
 	wait(0.15);
 	drive(45,45);
@@ -910,8 +938,9 @@ void Mission_N05(){//105  电脑 					*hcp
 	wait(0.1);
 	setServ(75,256);
 	wait(0.25);
-	drive(-65,-65);
+	drive(-45,-45);
 	wait(0.2);
+	setServ(-90,256);
 }
 void Mission_N06(){//106  打印
 	Act_06();
@@ -944,7 +973,7 @@ void Mission_N07(){//107  病毒 带stop 需改		*hcp
 	wait(0.1);
 	drive(-15,-15);
 	setServ(45,64);
-	wait(0.2);
+	wait(0.3);
 	drive(15,15);
 	wait(0.75);
 	setServ(-45,1023);
@@ -967,28 +996,27 @@ void Mission_N08(){//108  机器人
 	}
 }
 void Mission_N09(){//109  导航 无stop 带归位 	*t *hcp
-	drive(-30,-30);
-	wait(0.1);
+	drive(-25,-25);
 	setServ(60,1023); 
-	wait(0.65);
+	wait(1);
 	setServ(-90,1023);  
 }
 void Mission_N10(){//110  推车  				*hcp **args
-	int pt=1,dest=2300;//dt=r-l
-	bool invert=true;
+	int pt=1,destt=2300;//dt=r-l
+	int dest;
+	dest=ReadEEPROM(8);
+	if(dest<1000||dest>3000)dest=destt;
+	bool invert=false;
 	if(!invert){
 		setServ(85,512);
 		drive(35,35);
-		wait(0.2);
+		wait(0.275);
 		drive(50,25);
 		wait(1.5);
 
 		resettime();
 		while(dest<AI(pt)||seconds()<0.5){
-			if(seconds()<0.5)
-			drive(45,40);
-			else
-			drive(35,30);
+			drive(40,30);
 			if(isMotorStop())break;
 		}
 		drive(0,0);
@@ -1019,13 +1047,10 @@ void Mission_N10(){//110  推车  				*hcp **args
 		setServ(85,512); 
 		wait(0.5);
 		while(!dhs(0)){
-			if(seconds()<0.5)
-			drive(-40,-50);
-			else
 			drive(-30,-40);
 		}
 		while(dhs(0)){;}
-		wait(0.25);//0.2 
+		wait(0.125);//0.2 
 		drive(0,0);
 		wait(0.5);
 		setServ(0,512);
@@ -1072,7 +1097,7 @@ void Mission_N13(){//113  进制 带stop 带初始	*h
 	setServ(65,512);
 	wait(0.4);
 	drive(-45,-45);
-	setServ(90,128);
+	setServ(70,128);
 	wait(0.5);
 	drive(0,0);
 	setServ(-90,512);
@@ -1107,8 +1132,8 @@ void Mission_N14(){//114  下载 直回				*hcp
 //	wait(0.5);
 //	setServ(-90,512);
 //	wait(2);
-	drive(45,45);
-	wait(0.2);
+	drive(30,30);
+	wait(0.5);
 	setServ(55,1023);
 	wait(0.4);
 	for(;i<4;i++){
@@ -1136,17 +1161,20 @@ void Mission_N15(){//115  交换 带过线 			*hcp
 	wait(2);
 }
 void Mission_N16(){//116  丢方块 需改			*hcp	**args
-	bool invert=true;
+	bool invert=false;
 	if(!invert){
 		setServ(45,128);
+		Drive_SpeedDown();
 		Drive_CrossJunc();
-		drive(45,20);
-		wait(0.45);
-		drive(20,45);
-		wait(0.45);
-		drive(30,30);
+		Drive_SpeedUp();
+		drive(45,15);//20
+		wait(0.4);
+		drive(15,45);
+		wait(0.4);
+		drive(30,35);
 		while(!isMotorStop()){;}
-		wait(0.1);
+		drive(40,45);
+		wait(0.2);
 		drive(-40,-40);
 		wait(0.1);
 		drive(0,0);
@@ -1275,48 +1303,48 @@ void Act_08(){//208  r
 		}
 	}
 }
-void Act_09(){//209
-	int a,b;
-	int spd=20;
+void Act_09(){//209  无等待左 
+	drive(-tSpeed_9,tSpeed_9);
 	while(true){
-		a=AI(1);
-		b=AI(10);
-		a-=100;
-		drive((a-b)*0.05+spd,(b-a)*0.05+spd);
+//		if(!dhs(0)&&!dhs(1)&&!dhs(5)&&!dhs(6)&&(dhs(2)||dhs(3)||dhs(4)))
+//		if(!dhs(0)&&!dhs(5)&&!dhs(6)&&(dhs(1)||dhs(2)||dhs(3)||dhs(4)))
+		if(!dhs(0)&&!dhs(3)&&!dhs(4)&&!dhs(5)&&!dhs(6)&&(dhs(1)||dhs(2)))
+		return;
 	} 
 }
 void Act_10(){//210  校准 
 	Calibrate();
 }
-void Act_11(){//211  卫星  Ses2 
-	Act_06();
-	drive(-15,-15);
-	wait(0.1);
-	//////
-	drive(-15,20);
-	wait(0.4);
-	drive(20,-15);
-	wait(0.4);
-	drive(-15,20);
-	wait(0.4);
-	drive(20,-15);
-	wait(0.4);
-	drive(-15,25);
-	wait(0.3);
-	drive(25,-15);
-	wait(0.3);
-	drive(15,25);
-	wait(0.3);
-	drive(25,15);
-	SetMoto(2,25);
-	wait(0.3);
-	//////
-	drive(15,15);
-	SetMoto(2,60);
-	wait(0.25);
-	SetMoto(2,90);
-	wait(0.25);
-	SetMoto(2,0);
+void Act_11(){//211  附加舵机初始
+	setServ(110,512); 
+//	Act_06();
+//	drive(-15,-15);
+//	wait(0.1);
+//	//////
+//	drive(-15,20);
+//	wait(0.4);
+//	drive(20,-15);
+//	wait(0.4);
+//	drive(-15,20);
+//	wait(0.4);
+//	drive(20,-15);
+//	wait(0.4);
+//	drive(-15,25);
+//	wait(0.3);
+//	drive(25,-15);
+//	wait(0.3);
+//	drive(15,25);
+//	wait(0.3);
+//	drive(25,15);
+//	SetMoto(2,25);
+//	wait(0.3);
+//	//////
+//	drive(15,15);
+//	SetMoto(2,60);
+//	wait(0.25);
+//	SetMoto(2,90);
+//	wait(0.25);
+//	SetMoto(2,0);
 }
 void Act_12(){//212  退线 
 	drive(-45,-45);
@@ -1389,6 +1417,7 @@ void Act_16(){//216  停0.2
 }
 /* TODO (#1#): 7to8 corner */
 void Act_17(){//217  无钝角右转 (七至八) 
+	resettime();
 	while(true){
 		if(dhs(6)&&dhs(5)&&dhs(4)){
 			drive(tSpeed_8,tSpeed_8);
@@ -1400,6 +1429,12 @@ void Act_17(){//217  无钝角右转 (七至八)
 				if(!dhs(6)&&(dhs(4)||dhs(5)))
 				return;
 			}
+		}else if(dhs(1)&&!dhs(0)&&seconds()<0.5){
+			drive(lSpeed_8,hSpeed_8);
+			while(!dhs(2)){;}
+		}else if(dhs(5)&&!dhs(6)&&seconds()<0.5){
+			drive(hSpeed_8,lSpeed_8);
+			while(!dhs(4)){;}
 		}else if(dhs(2)){
 			drive(mSpeed_8,hSpeed_8);
 		}else if(dhs(4)){
@@ -1442,6 +1477,9 @@ void Act_19(){//219  慢右转
 	}
 }
 void Act_20(){//220
+	drive(0,0);
+	setServ(65,1023);
+	wait(0.5);
 }
 //================================================支持函数================================================// 
 void runsub(int sub,bool getName){//子函数调用函数 
@@ -1896,11 +1934,16 @@ bool isMotorStop(){//电机是否停转
 	return !(GetPrevSpeed(lMotorPort)||GetPrevSpeed(rMotorPort));
 }
 void Calibrate(){
-	DI(0);
-	wait(0.2);
-	while(!DI(0)){
-		SetMoto(2,20);
-        wait(0.05);
+//	DI(0);
+//	wait(0.2);
+//	while(!DI(0)){
+//		SetMoto(2,20);
+//        wait(0.05);
+//	}
+//	SetMoto(2,0);
+	while(!Get_Button()){
+		printf("       Update\n\n  Dist: %d",AI(1)); 
+		wait(0.1);
 	}
-	SetMoto(2,0);
+	WriteEEPROM(8,AI(1));
 }
